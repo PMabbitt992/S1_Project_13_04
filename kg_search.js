@@ -27,10 +27,42 @@
 
 
 
-
-
 /*============================================================*/
+window.onload = init
+document.getElementById("wordSearchTitle").innerHTML = wordSearchTitle;
 document.getElementById("wordTable").innerHTML = drawWordSearch(letterGrid, wordGrid);
+document.getElementById("wordList").innerHTML = showList(wordArray);
+var wordArray = wordGrid;
+var letterBubble = document.querySelectorAll("table#wordSearchTable td");
+console.log(document.querySelectorAll("table#wordSearchTable td"))
+
+function init() {
+      highlightLetters();
+}
+
+
+
+function highlightLetters() {
+      for (var i = 0; i < letterBubble.length; i++) {
+            letterBubble[i].addEventListener("mouseenter", extendBackground);
+      }
+}
+
+function extendBackground(e) {
+      e.target.style.backgroundColor = "rgb(255, 131, 0)";
+}
+
+// var letterBubble = document.querySelectorAll("table#wordSearchTable td");
+
+// document.getElementById("wordSearchTable").addEventListener("click", function () {
+//       for (let i = 0; i < letterBubble.length; i++) {
+//             letterBubble[i].style.backgroundColor = "rgb(255, 200, 255)";
+//       }
+// });
+
+/*Users select letters by pressing the mouse pointer down and moving over each table cell. As the
+pointer enters the table cell for the letter, the background color should change to pink and the letter within the cell should be added to text displayed in the pickedLetter input box. */
+
 
 function drawWordSearch(letters, words) {
       var rowSize = letters.length;
