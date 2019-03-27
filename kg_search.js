@@ -26,39 +26,52 @@
 */
 
 
-
 /*============================================================*/
-window.onload = init
+//Word search title displays
 document.getElementById("wordSearchTitle").innerHTML = wordSearchTitle;
+//the page draws teh word search using letterGrid and wordGrid
 document.getElementById("wordTable").innerHTML = drawWordSearch(letterGrid, wordGrid);
+//word list si generated using the wordArray
 document.getElementById("wordList").innerHTML = showList(wordArray);
+//wordArray is equal to the wordGrid
 var wordArray = wordGrid;
+//letter bubble is equal to all wordSearchTable table cells
 var letterBubble = document.querySelectorAll("table#wordSearchTable td");
-console.log(document.querySelectorAll("table#wordSearchTable td"))
+var letterGrid = letterGrid;
+//variable letterValue
+var letterValue = "";
 
-function init() {
-      highlightLetters();
-}
+//when the mouse is clicked down, the highlight letters function runs
+document.getElementById("wordSearchTable").addEventListener("mousedown", highlightLetters);
 
+//when the mouse is up the stop highlight function runs
+document.getElementById("wordSearchTable").addEventListener("mouseup", stopHiglight);
 
-
-function highlightLetters() {
+//for each item that the mouse enters in the letterbubble array, the bubble is colored, 
+function highlightLetters(e) {
       for (var i = 0; i < letterBubble.length; i++) {
-            letterBubble[i].addEventListener("mouseenter", extendBackground);
+            letterBubble[i].addEventListener("mouseenter", colorBubble);
       }
+      e.preventDefault();
 }
 
-function extendBackground(e) {
+
+// change bubble background color, get bubble value
+function colorBubble(e) {
       e.target.style.backgroundColor = "rgb(255, 131, 0)";
+      letterValue += e.target.textContent;
+      document.getElementById("pickedLetters").value = letterValue;
+      e.preventDefault();
+
+}
+//remove event listener, stops higlighting bubbles, and sets lettervalu
+function stopHiglight() {
+      for (var i = 0; i < letterBubble.length; i++) {
+            letterBubble[i].removeEventListener("mouseenter", colorBubble);
+      }
+      letterValue = "";
 }
 
-// var letterBubble = document.querySelectorAll("table#wordSearchTable td");
-
-// document.getElementById("wordSearchTable").addEventListener("click", function () {
-//       for (let i = 0; i < letterBubble.length; i++) {
-//             letterBubble[i].style.backgroundColor = "rgb(255, 200, 255)";
-//       }
-// });
 
 /*Users select letters by pressing the mouse pointer down and moving over each table cell. As the
 pointer enters the table cell for the letter, the background color should change to pink and the letter within the cell should be added to text displayed in the pickedLetter input box. */
