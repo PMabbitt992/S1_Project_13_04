@@ -50,6 +50,7 @@ document.getElementById("wordSearchTable").addEventListener("mouseup", stopHigli
 //for each item that the mouse enters in the letterbubble array, the bubble is colored, 
 function highlightLetters(e) {
       for (var i = 0; i < letterBubble.length; i++) {
+            letterBubble[i].style.cursor = "pointer";
             letterBubble[i].addEventListener("mouseenter", colorBubble);
       }
       e.preventDefault();
@@ -62,16 +63,27 @@ function colorBubble(e) {
       letterValue += e.target.textContent;
       document.getElementById("pickedLetters").value = letterValue;
       e.preventDefault();
-
 }
+
+
 //remove event listener, stops higlighting bubbles, and sets lettervalu
 function stopHiglight() {
       for (var i = 0; i < letterBubble.length; i++) {
             letterBubble[i].removeEventListener("mouseenter", colorBubble);
       }
-      letterValue = "";
-}
+      // for each word(maybe) in wordArray length, check if letter value === word array. If yes, turn green. if no, reset to white. after, reset letter value
 
+      //wip, only reset first row to white no matter what
+      for (var i = 0; i < wordArray.length; i++) {
+            if (letterValue === wordArray[i]) {
+                  letterBubble[i].style.backgroundColor = "rgb(0, 180, 65)";
+            } else {
+                  letterBubble[i].style.backgroundColor = "rgb(255, 255, 255)";
+            }
+            letterValue = "";
+      }
+
+}
 
 /*Users select letters by pressing the mouse pointer down and moving over each table cell. As the
 pointer enters the table cell for the letter, the background color should change to pink and the letter within the cell should be added to text displayed in the pickedLetter input box. */
